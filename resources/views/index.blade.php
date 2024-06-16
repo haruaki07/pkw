@@ -5,7 +5,7 @@
             <div class="col-md-8">
                 @forelse ($articles as $article)
                     <div class="mb-5">
-                        <h2 class="display-4 font-bold">{{ $article->title }}</h2>
+                        <h2 class="h1 fw-semibold">{{ $article->title }}</h2>
                         <p class="text-secondary">By {{ $article->author->name }} at {{ $article->created_at }}</p>
                         <div style="white-space: pre" class="lead">{{ $article->content }}</div>
                     </div>
