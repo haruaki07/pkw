@@ -1,63 +1,59 @@
 @extends('layouts.app')
 
-@php
-    $is_user = Request::user()->role === App\Enums\UserRole::User;
-@endphp
-
-@section('title', $is_user ? 'My Articles' : 'Articles')
+@section('title', 'Users')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __($is_user ? 'My Articles' : 'Articles') }}</div>
+                    <div class="card-header">{{ __('Users') }}</div>
 
                     <div class="card-body">
-                        @if (session('status') === 'article-created')
+                        @if (session('status') === 'user-created')
                             <div class="alert alert-success" role="alert">
-                                Posted new article!
+                                New user has been created!
                             </div>
                         @endif
 
-                        @if (session('status') === 'article-deleted')
+                        @if (session('status') === 'user-deleted')
                             <div class="alert alert-success" role="alert">
-                                Article has been deleted!
+                                User has been deleted!
                             </div>
                         @endif
 
-                        <a href="{{ route('articles.create') }}" class="btn btn-primary mb-2">Write new article</a>
+                        <a href="{{ route('users.create') }}" class="btn btn-primary mb-2">Create new user</a>
 
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <caption>
-                                    Showing {{ count($articles) }} article{{ count($articles) > 1 ? 's' : '' }}
+                                    Showing {{ count($users) }} user{{ count($users) > 1 ? 's' : '' }}
                                 </caption>
                                 <thead>
                                     <tr>
-                                        <th scope="col">Title</th>
-                                        @if (Request::user()->role !== \App\Enums\UserRole::User)
-                                            <th scope="col">Author</th>
-                                        @endif
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Role</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($articles as $article)
+                                    @forelse ($users as $user)
                                         <tr>
-                                            <td>{{ $article->title }}</td>
-                                            @if (Request::user()->role !== \App\Enums\UserRole::User)
-                                                <th scope="col">{{ $article->author->name }}</th>
-                                            @endif
-                                            <td>{{ $article->created_at }}</td>
+                                            <td>{{ $user->id }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->role->name }}</td>
+                                            <td>{{ $user->created_at }}</td>
                                             <td>
                                                 <a class="btn btn-primary btn-sm"
-                                                    href="{{ route('articles.edit', $article->id) }}">
+                                                    href="{{ route('users.edit', $user->id) }}">
                                                     Edit
                                                 </a>
 
-                                                <form method="POST" action="{{ route('articles.destroy', $article->id) }}"
+                                                <form method="POST" action="{{ route('users.destroy', $user->id) }}"
                                                     style="display:inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -72,17 +68,12 @@
                                     @empty
                                         <tr>
                                             <td colspan="4" class="text-center">
-                                                @if ($is_user)
-                                                    You don't have any articles yet.
-                                                @else
-                                                    There are no articles yet.
-                                                @endif
+                                                There are no users yet.
                                             </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
