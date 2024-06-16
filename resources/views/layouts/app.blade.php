@@ -76,6 +76,8 @@
                                         @csrf
                                     </form>
                                 </div>
+
+                                <a href="{{ route('articles.index') }}" class="nav-link">My Articles</a>
                             </li>
                         @endguest
                     </ul>
