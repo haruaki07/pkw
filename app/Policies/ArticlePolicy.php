@@ -20,10 +20,14 @@ class ArticlePolicy
     /**
      * Determine whether the user can view the model.
      */
-    // public function view(User $user, Article $article): bool
-    // {
-    //     //
-    // }
+    public function view(User $user, Article $article): bool
+    {
+        if (in_array($user->role, [UserRole::Admin, UserRole::User])) {
+            return true;
+        }
+
+        return $user->id === $article->user_id;
+    }
 
     /**
      * Determine whether the user can create models.
@@ -38,7 +42,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        if ($user->role === UserRole::Admin) {
+        if (in_array($user->role, [UserRole::Admin, UserRole::User])) {
             return true;
         }
 
@@ -50,7 +54,7 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        if ($user->role === UserRole::Admin) {
+        if (in_array($user->role, [UserRole::Admin, UserRole::User])) {
             return true;
         }
 

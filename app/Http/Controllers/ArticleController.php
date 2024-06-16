@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -13,10 +14,14 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $articles = $request->user()
-            ->articles()
-            ->orderBy('created_at', 'desc')
-            ->get();
+        if ($request->user()->role === UserRole::User) {
+            $articles = $request->user()
+                ->articles()
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            $articles = Article::orderBy('created_at', 'desc')->get();
+        }
 
         return view('article.index', compact('articles'));
     }
