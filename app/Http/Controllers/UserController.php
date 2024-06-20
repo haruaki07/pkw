@@ -49,17 +49,16 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-
-        $data = $request->validate([
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', "unique:users,email,{$user->id}"],
-            'password' => ['required', 'string'],
+            'password' => ['string', 'nullable'],
             'role' => ['integer', Rule::enum(UserRole::class)]
         ]);
 
-        $user->fill($data);
+        $user->fill($request->except('password'));
 
-        if ($user->wasChanged('password')) {
+        if ($request->has('password')) {
             $user->password = Hash::make($request->password);
         }
 

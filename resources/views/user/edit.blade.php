@@ -61,8 +61,8 @@
                                 <div class="col-md-6">
                                     <input id="password" type="text"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        value="{{ old('password') ?? $user->password }}" required autocomplete="password">
-
+                                        value="{{ old('password') }}">
+                                    <div class="form-text">Leave it blank if you don't want to change it.</div>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
