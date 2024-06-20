@@ -7,7 +7,7 @@
                     <div class="mb-5">
                         <h2 class="h1 fw-semibold">{{ $article->title }}</h2>
                         <p class="text-secondary">By {{ $article->author->name }} at {{ $article->created_at }}</p>
-                        <div style="white-space: pre" class="lead">{{ $article->content }}</div>
+                        <div class="lead">{{ $article->content }}</div>
                     </div>
                 @empty
                     <div class="text-center">No articles yet.</div>
