@@ -22,6 +22,8 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @section('styles')
+    @show
 </head>
 
 <body>
@@ -94,6 +96,10 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <div class="p-4 pt-0 text-center footer">
+            Kelompok 6
+        </div>
     </div>
 </body>
 
